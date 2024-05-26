@@ -1,4 +1,4 @@
-![IMG_1250](https://github.com/Riser17/AirbnbCloneApp/assets/91198103/7d5f026d-bb18-4b89-a20b-0078afdc2227)# Airbnb Clone React Native App
+# Airbnb Clone React Native App
 
 This is a React Native application inspired by Airbnb, allowing users to browse homes and cabins, view details, and interact with various features such as authentication, user profiles, and more.
 

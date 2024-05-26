@@ -1,31 +1,37 @@
-import { StyleSheet } from 'react-native';
+import { View } from "react-native";
+import React, { useMemo, useState } from "react";
+import { Stack } from "expo-router";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import ExploreHeader from "@/components/ExploreHeader";
+import Listing from "@/components/Listings";
+import listingData from "@/assets/data/airbnb-listings.json";
+import listingDataGeo from "@/assets/data/airbnb-listings.geo.json";
+import ListingsMap from "@/components/ListingsMap";
+import ListingsBottomSheet from "@/components/ListingsBottomSheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-export default function TabOneScreen() {
+const Page = () => {
+  const [category, setCategory] = useState("Ting homes");
+  const items = useMemo(() => listingData as any, []);
+  const geoItems = useMemo(() => listingDataGeo as any, []);
+
+  const onDataChanged = (category: string) => {
+    setCategory(category);
+  };
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+    <View style={{ flex: 1, marginTop: 80 }}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Stack.Screen
+          options={{
+            header: () => <ExploreHeader onCategoryChanged={onDataChanged} />,
+          }}
+        />
+        {/* <Listing listings={items} category={category} /> */}
+        <ListingsMap listings={geoItems} />
+        <ListingsBottomSheet listings={items} category={category} />
+      </GestureHandlerRootView>
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+export default Page;
